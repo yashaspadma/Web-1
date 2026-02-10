@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ta-da! 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ffc3d5 100%);
+            overflow: hidden;
+        }
+        
+        .hearts {
+            position: fixed;
+            font-size: 30px;
+            animation: fall 10s linear infinite;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            max-width: 500px;
+            animation: slideUp 1s ease-out;
+        }
+        
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #ff1493;
+            margin: 0 0 20px 0;
+            font-size: 48px;
+        }
+        
+        p {
+            color: #ff69b4;
+            font-size: 22px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        
+        #cleanImage {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 10px auto;
+            display: block;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
+        }
+        
+        button {
+            margin-top: 15px;
+            padding: 12px 35px;
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+            font-family: 'Quicksand', sans-serif;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.5);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
+                max-width: 95%;
+            }
+            
+            h1 {
+                font-size: 30px;
+                margin-bottom: 10px;
+            }
+            
+            #cleanImage {
+                width: 200px;
+                height: 200px;
+                margin: 8px auto;
+            }
+            
+            p {
+                font-size: 16px;
+                margin: 8px 0;
+            }
+            
+            button {
+                margin-top: 10px;
+                padding: 10px 30px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Man looking fine! 😎</h1>
+        
+        <div id="imageContainer" style="position: relative; display: inline-block;">
+            <img id="cleanImage" src="shaved.jpeg" alt="After shaving">
+        </div>
+        
+        <p id="instruction" style="margin-top: 20px; font-size: 22px; color: #ff1493;">now give him some flowers 💐</p>
+        
+        <button id="flowerBtn" onclick="giveFlowers()">Give him flowers 💐🌹🌸</button>
+    </div>
+    
+    <script>
+        // Create falling hearts
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'hearts';
+            heart.innerHTML = '💗';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            document.body.appendChild(heart);
+        }
+        
+        function giveFlowers() {
+            const imageContainer = document.getElementById('imageContainer');
+            const btn = document.getElementById('flowerBtn');
+            const instruction = document.getElementById('instruction');
+            
+            // Place flower emojis around/on the image
+            const flowers = ['💐', '🌹', '🌸', '💐', '🌹'];
+            const positions = [
+                { left: '10%', top: '20%' },
+                { left: '70%', top: '15%' },
+                { left: '5%', top: '60%' },
+                { left: '75%', top: '55%' },
+                { left: '40%', top: '80%' }
+            ];
+            
+            flowers.forEach((flower, i) => {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.textContent = flower;
+                    el.style.position = 'absolute';
+                    el.style.fontSize = '35px';
+                    el.style.left = positions[i].left;
+                    el.style.top = positions[i].top;
+                    el.style.pointerEvents = 'none';
+                    el.style.animation = 'popIn 0.4s ease-out';
+                    imageContainer.appendChild(el);
+                }, i * 150);
+            });
+            
+            btn.style.display = 'none';
+            instruction.textContent = 'Beautiful! 🎉';
+            
+            setTimeout(() => {
+                window.location.href = 'allset.html';
+            }, 1200);
+        }
+    </script>
+    
+    <style>
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Him Shave! 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ffc3d5 100%);
+            overflow: hidden;
+        }
+        
+        .hearts {
+            position: fixed;
+            font-size: 30px;
+            animation: fall 10s linear infinite;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            max-width: 450px;
+        }
+        
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #ff1493;
+            margin: 0 0 20px 0;
+            font-size: 38px;
+        }
+        
+        p {
+            color: #ff69b4;
+            font-size: 20px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+        
+        #beardImage {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            display: block;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+        }
+        
+        h2 {
+            margin: 0;
+        }
+        
+        .slider-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 15px;
+        }
+        
+        .instruction {
+            color: #ff1493;
+            font-size: 18px;
+            margin: 10px 0;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .slide-track {
+            position: relative;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to right, #ffc3d5 0%, #ff69b4 100%);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .slider-button {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            left: 5px;
+            cursor: grab;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s;
+            touch-action: none;
+            user-select: none;
+        }
+        
+        .slider-button:active {
+            cursor: grabbing;
+            transform: scale(1.1);
+        }
+        
+        .slider-text {
+            margin-left: 60px;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+                max-width: 95%;
+            }
+            
+            h1 {
+                font-size: 32px;
+            }
+            
+            #beardImage {
+                width: 220px;
+            }
+            
+            p {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💕Introducing this fine </h1>
+        <h2 style="font-family: 'Pacifico', cursive; color: #ff69b4; font-size: 32px; margin-bottom: 20px;">looking mf</h2>
+        <p>Go ahead give him a shave! 🪒</p>
+        
+        <div style="position: relative; display: inline-block;">
+            <img id="beardImage" src="beard.jpeg" alt="Before">
+            <div id="razor" style="position: absolute; font-size: 50px; cursor: move; touch-action: none; user-select: none;">🪒</div>
+        </div>
+        
+        <p class="instruction" id="instruction">Move your finger over the photo! 🪒</p>
+        <div id="progress" style="margin-top: 20px; font-size: 24px; color: #ff1493; font-weight: 600;">Start moving!</div>
+    </div>
+    
+    <script>
+        // Create falling hearts
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'hearts';
+            heart.innerHTML = '💗';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            document.body.appendChild(heart);
+        }
+        
+        // Razor follows mouse/touch automatically
+        const razor = document.getElementById('razor');
+        const beardImage = document.getElementById('beardImage');
+        const progressText = document.getElementById('progress');
+        const imageContainer = beardImage.parentElement;
+        
+        let movingTimer = null;
+        let totalTime = 0;
+        let started = false;
+        
+        // Position razor at center initially
+        window.addEventListener('load', () => {
+            const rect = beardImage.getBoundingClientRect();
+            razor.style.left = (rect.width / 2 - 25) + 'px';
+            razor.style.top = (rect.height / 2 - 25) + 'px';
+        });
+        
+        function startTimer() {
+            if (movingTimer) return;
+            started = true;
+            
+            movingTimer = setInterval(() => {
+                totalTime += 0.1;
+                const remaining = Math.max(0, 3 - totalTime);
+                progressText.textContent = remaining.toFixed(1) + 's left';
+                
+                if (totalTime >= 3) {
+                    clearInterval(movingTimer);
+                    progressText.textContent = 'Perfect! 🎉';
+                    setTimeout(() => {
+                        window.location.href = 'reveal.html';
+                    }, 500);
+                }
+            }, 100);
+        }
+        
+        function moveRazor(clientX, clientY) {
+            const rect = imageContainer.getBoundingClientRect();
+            
+            let x = clientX - rect.left - 25;
+            let y = clientY - rect.top - 25;
+            
+            // Constrain to image bounds
+            if (x < 0) x = 0;
+            if (y < 0) y = 0;
+            if (x > rect.width - 50) x = rect.width - 50;
+            if (y > rect.height - 50) y = rect.height - 50;
+            
+            razor.style.left = x + 'px';
+            razor.style.top = y + 'px';
+            
+            if (!started) startTimer();
+        }
+        
+        // Mouse - razor follows cursor over image
+        imageContainer.addEventListener('mousemove', (e) => {
+            moveRazor(e.clientX, e.clientY);
+        });
+        
+        // Touch - razor follows finger
+        imageContainer.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveRazor(e.touches[0].clientX, e.touches[0].clientY);
+        });
+        
+        imageContainer.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            moveRazor(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: false });
+    </script>
+</body>
+</html>
