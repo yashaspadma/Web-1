@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💕</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ffc3d5 100%);
+            overflow: hidden;
+        }
+        
+        .hearts {
+            position: fixed;
+            font-size: 30px;
+            animation: fall 10s linear infinite;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        
+        .container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            max-width: 500px;
+        }
+        
+        h1 {
+            color: #ff1493;
+            margin: 0 0 30px 0;
+            font-size: 42px;
+        }
+        
+        .button-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+            position: relative;
+            height: 60px;
+        }
+        
+        button {
+            padding: 15px 50px;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        
+        #yesBtn {
+            background-color: #00ff00;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+        }
+        
+        #yesBtn:hover {
+            background-color: #00cc00;
+            transform: scale(1.1);
+        }
+        
+        #noBtn {
+            background-color: #ff1493;
+            color: white;
+            position: absolute;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+        }
+        
+        #celebration {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 105, 180, 0.95);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        #celebration h1 {
+            font-size: 60px;
+            color: white;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .emoji {
+            font-size: 80px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will You Be My Valentine? 💕</h1>
+        <div class="button-container">
+            <button id="yesBtn" onclick="sayYes()">Yes! 💖</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+    </div>
+    
+    <div id="celebration">
+        <div class="emoji">🎉💕🎊</div>
+        <h1>YAAAY!!! 💖</h1>
+        <h2 style="color: white; font-size: 36px;">I love you, Chicoo! 😘</h2>
+        <div class="emoji">💗💕💖</div>
+    </div>
+    
+    <script>
+        // Create falling hearts
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'hearts';
+            heart.innerHTML = '💗';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            document.body.appendChild(heart);
+        }
+        
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const container = document.querySelector('.button-container');
+            
+            // Get random position
+            const maxX = window.innerWidth - 150;
+            const maxY = window.innerHeight - 60;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            btn.style.position = 'fixed';
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+        }
+        
+        function sayYes() {
+            document.getElementById('celebration').style.display = 'flex';
+            
+            // Create confetti effect
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.innerHTML = ['💕', '💖', '💗', '💓', '💝'][Math.floor(Math.random() * 5)];
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-50px';
+                    confetti.style.fontSize = '40px';
+                    confetti.style.zIndex = '101';
+                    confetti.style.animation = 'fall 4s linear';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 50);
+            }
+        }
+    </script>
+</body>
+</html>

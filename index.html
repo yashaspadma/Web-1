@@ -3,52 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>For My Valentine 💕</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff6b9d 0%, #ffc3d5 100%);
+            overflow: hidden;
+        }
+        
+        .hearts {
+            position: fixed;
+            font-size: 30px;
+            animation: fall 10s linear infinite;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
         }
         
         .container {
             background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
             text-align: center;
+            position: relative;
+            z-index: 10;
         }
         
         h1 {
-            color: #333;
-            margin: 0 0 20px 0;
+            color: #ff1493;
+            margin: 0 0 10px 0;
+            font-size: 48px;
+        }
+        
+        p {
+            color: #ff69b4;
+            font-size: 24px;
+            margin: 20px 0;
         }
         
         a {
             display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background-color: #667eea;
+            margin-top: 30px;
+            padding: 15px 40px;
+            background-color: #ff1493;
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 25px;
             font-weight: bold;
-            transition: background-color 0.3s;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
         }
         
         a:hover {
-            background-color: #764ba2;
+            background-color: #ff69b4;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.5);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>hi yashas</h1>
-        <a href="#">Click me to visit website</a>
+        <h1>hi Chicoo 💕</h1>
+        <p>hi cutie cutie</p>
+        <a href="valentine.html">i gotta ask u something</a>
     </div>
+    
+    <script>
+        // Create falling hearts
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'hearts';
+            heart.innerHTML = '💗';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            document.body.appendChild(heart);
+        }
+    </script>
 </body>
 </html>
