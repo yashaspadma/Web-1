@@ -4,44 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will You Be My Valentine? 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #ff6b9d 0%, #ffc3d5 100%);
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #ff6b9d 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
             overflow: hidden;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .hearts {
             position: fixed;
-            font-size: 30px;
+            font-size: 35px;
             animation: fall 10s linear infinite;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.5));
         }
         
         @keyframes fall {
-            0% { transform: translateY(-100vh) rotate(0deg); }
-            100% { transform: translateY(100vh) rotate(360deg); }
+            0% { 
+                transform: translateY(-100vh) rotate(0deg) scale(0.8); 
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { 
+                transform: translateY(100vh) rotate(360deg) scale(1.2); 
+                opacity: 0;
+            }
         }
         
         .container {
-            background: white;
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 60px 80px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.5),
+                        0 0 0 1px rgba(255, 255, 255, 0.3);
             text-align: center;
             position: relative;
             z-index: 10;
-            max-width: 500px;
+            max-width: 600px;
+            animation: floatIn 1s ease-out;
+        }
+        
+        @keyframes floatIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
         
         h1 {
+            font-family: 'Pacifico', cursive;
             color: #ff1493;
-            margin: 0 0 30px 0;
-            font-size: 42px;
+            margin: 0 0 40px 0;
+            font-size: 48px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10% { transform: scale(1.05); }
+            20% { transform: scale(1); }
         }
         
         .button-container {
@@ -54,32 +102,50 @@
         }
         
         button {
-            padding: 15px 50px;
-            font-size: 24px;
-            font-weight: bold;
+            padding: 18px 55px;
+            font-size: 26px;
+            font-weight: 700;
             border: none;
-            border-radius: 25px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            transition: all 0.4s ease;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 1px;
         }
         
         #yesBtn {
-            background-color: #00ff00;
+            background: linear-gradient(135deg, #00ff88, #00cc66);
             color: white;
-            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #yesBtn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        #yesBtn:hover::before {
+            left: 100%;
         }
         
         #yesBtn:hover {
-            background-color: #00cc00;
-            transform: scale(1.1);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.6);
         }
         
         #noBtn {
-            background-color: #ff1493;
+            background: linear-gradient(135deg, #ff1493, #c44569);
             color: white;
             position: absolute;
-            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
         }
         
         #celebration {
@@ -89,27 +155,46 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 105, 180, 0.95);
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.98), rgba(196, 69, 105, 0.98));
             z-index: 100;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         #celebration h1 {
-            font-size: 60px;
+            font-family: 'Pacifico', cursive;
+            font-size: 72px;
             color: white;
             animation: pulse 1s infinite;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        #celebration h2 {
+            font-family: 'Poppins', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.15); }
         }
         
         .emoji {
-            font-size: 80px;
-            margin: 20px;
+            font-size: 100px;
+            margin: 30px;
+            animation: spin 2s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
         }
     </style>
 </head>
